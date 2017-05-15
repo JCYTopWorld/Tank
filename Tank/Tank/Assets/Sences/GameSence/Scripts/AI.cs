@@ -15,7 +15,7 @@ public class AI : MonoBehaviour
     public Tank tank;
     private Status status = Status.Patrol;
     private GameObject target;
-    private float sightDistance = 30;
+    private float sightDistance = 120;
     private float lastSearchTargetTime = 0;
     private float searchTargetInterval = 3;
     private Path path = new Path();
@@ -46,17 +46,22 @@ public class AI : MonoBehaviour
         }
     }
 
-    //初始化路径
+    /// <summary>
+    /// 初始化路径
+    /// </summary>
     void InitWaypoint()
     {
         GameObject obj = GameObject.Find("WaypointContainer");
-        if (obj)
+        if (obj && obj.transform.GetChild(0) != null)
         {
-            path.InitByObj(obj);
+            Vector3 targetPos = obj.transform.GetChild(0).position;
+            path.InitByNavMeshPath(transform.position, targetPos);
         }
     }
 
-    //搜索目标
+    /// <summary>
+    /// 搜索目标
+    /// </summary>
     private void TargetUpdate()
     {
         float interval = Time.time - lastSearchTargetTime;
@@ -65,7 +70,9 @@ public class AI : MonoBehaviour
         else Notarget();
     }
 
-    //已经发现坦克目标的情况下
+    /// <summary>
+    /// 已经发现坦克目标的情况下
+    /// </summary>
     private void HasTarget()
     {
         Tank targetTank = target.GetComponent<Tank>();
@@ -83,7 +90,9 @@ public class AI : MonoBehaviour
         }
     }
 
-    //没有发现坦克目标情况下
+    /// <summary>
+    /// 没有发现坦克目标情况下
+    /// </summary>
     private void Notarget()
     {
         float minHp = float.MaxValue;
@@ -124,7 +133,10 @@ public class AI : MonoBehaviour
         }
     }
 
-    //被攻击,仇恨系统
+    /// <summary>
+    /// 被攻击,仇恨系统
+    /// </summary>
+    /// <param name="attackTank"></param>
     public void OnAttecked(GameObject attackTank)
     {
         target = attackTank;
@@ -142,31 +154,42 @@ public class AI : MonoBehaviour
         }
     }
 
-    //巡逻逻辑
+    /// <summary>
+    /// 巡逻逻辑
+    /// </summary>
     private void PartrolStart()
     {
 
     }
 
-    //攻击逻辑
+    /// <summary>
+    /// 攻击逻辑
+    /// </summary>
     private void AttackStart()
     {
 
     }
 
-    //巡逻中
+    /// <summary>
+    /// 巡逻中
+    /// </summary>
     private void PatrolUpdate()
     {
 
     }
 
-    //攻击中
+    /// <summary>
+    /// 攻击中
+    /// </summary>
     private void AttackUpdate()
     {
 
     }
 
-    //获取炮管和炮塔的目标角度
+    /// <summary>
+    /// 获取炮管和炮塔的目标角度
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetTurretTarget()
     {
         //没有目标，炮塔朝向坦克的前方
@@ -186,7 +209,10 @@ public class AI : MonoBehaviour
         }
     }
 
-    //是否发射炮弹
+    /// <summary>
+    /// 是否发射炮弹
+    /// </summary>
+    /// <returns></returns>
     public bool IsShot()
     {
         if (target == null) return false;
@@ -202,7 +228,10 @@ public class AI : MonoBehaviour
             return false;
     }
 
-    //获取转向角
+    /// <summary>
+    /// 获取转向角
+    /// </summary>
+    /// <returns></returns>
     public float GetSteering()
     {
         if (tank == null) return 0;
@@ -212,7 +241,10 @@ public class AI : MonoBehaviour
         else return 0;
     }
 
-    //获取马力
+    /// <summary>
+    /// 获取马力
+    /// </summary>
+    /// <returns></returns>
     public float GetMotor()
     {
         if (tank == null)
@@ -227,10 +259,19 @@ public class AI : MonoBehaviour
         else return tank.maxMotorTorque;
     }
 
-    //获取刹车
+    /// <summary>
+    /// 获取刹车
+    /// </summary>
+    /// <returns></returns>
     public float GetBrakeTorque()
     {
         if (path.isFinish) return tank.maxMotorTorque;
         else return 0;
+    }
+
+
+    void OnDrawGizmos()
+    {
+        path.DrawWaypoints();
     }
 }
