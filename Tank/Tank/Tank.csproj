@@ -81,12 +81,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Sences\GameSence\Scripts\AI.cs" />
-    <Compile Include="Assets\Sences\GameSence\Scripts\AxleInfo.cs" />
-    <Compile Include="Assets\Sences\GameSence\Scripts\Bullet.cs" />
-    <Compile Include="Assets\Sences\GameSence\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\Sences\GameSence\Scripts\Path.cs" />
-    <Compile Include="Assets\Sences\GameSence\Scripts\Tank.cs" />
+    <Compile Include="Assets\AI.cs" />
+    <Compile Include="Assets\AxleInfo.cs" />
+    <Compile Include="Assets\Battle.cs" />
+    <Compile Include="Assets\BattleTank.cs" />
+    <Compile Include="Assets\Bullet.cs" />
+    <Compile Include="Assets\CameraFollow.cs" />
+    <Compile Include="Assets\CoreFrame\PanelBase.cs" />
+    <Compile Include="Assets\CoreFrame\PanelMgr.cs" />
+    <Compile Include="Assets\PanelCode\InfoPanel.cs" />
+    <Compile Include="Assets\PanelCode\OptionPanel.cs" />
+    <Compile Include="Assets\PanelCode\TitlePanel.cs" />
+    <Compile Include="Assets\PanelCode\WinPanel.cs" />
+    <Compile Include="Assets\Path.cs" />
+    <Compile Include="Assets\Root.cs" />
+    <Compile Include="Assets\Tank.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue %2B100).shader" />
